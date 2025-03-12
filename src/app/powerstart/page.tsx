@@ -214,12 +214,27 @@ export default function PowerStartPage() {
   ];
 
   const formatCurrency = (value: number) => {
+    // Conversion d'euros en FCFA (1 EUR = 650 FCFA)
+    const valueInCFA = Math.floor(value * 650);
     return new Intl.NumberFormat("fr-FR", {
       style: "currency",
-      currency: "EUR",
+      currency: "XOF",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
-    }).format(value);
+    }).format(valueInCFA);
+  };
+
+  // Fonction pour convertir les valeurs en euros en FCFA dans les scénarios
+  const convertEuroToFCFA = (euroValue: string) => {
+    if (euroValue.includes("€")) {
+      // Extraire la valeur numérique et convertir en FCFA
+      const numericValue = parseFloat(
+        euroValue.replace(/[^0-9,]/g, "").replace(",", "."),
+      );
+      const fcfaValue = Math.floor(numericValue * 650);
+      return new Intl.NumberFormat("fr-FR").format(fcfaValue) + " FCFA";
+    }
+    return euroValue;
   };
 
   const getStatusBadge = (status: string) => {
@@ -752,7 +767,7 @@ export default function PowerStartPage() {
                                           : ""
                                       }
                                     >
-                                      {detail.value}
+                                      {convertEuroToFCFA(detail.value)}
                                     </span>
                                   </li>
                                 ))}

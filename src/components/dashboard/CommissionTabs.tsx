@@ -62,12 +62,14 @@ export default function CommissionTabs({ className }: CommissionTabsProps) {
 
   // Format currency
   const formatCurrency = (value: number) => {
+    // Conversion d'euros en FCFA (1 EUR = environ 655.957 FCFA)
+    const valueInCFA = Math.round(value * 655.957);
     return new Intl.NumberFormat("fr-FR", {
       style: "currency",
-      currency: "EUR",
+      currency: "XOF",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
-    }).format(value);
+    }).format(valueInCFA);
   };
 
   // Get status badge based on status

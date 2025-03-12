@@ -181,6 +181,18 @@ export default function VolumePage() {
     return new Intl.NumberFormat("fr-FR").format(value);
   };
 
+  // Conversion d'euros en FCFA
+  const formatCurrency = (value: number) => {
+    // Conversion d'euros en FCFA (1 EUR = 650 FCFA)
+    const valueInCFA = Math.floor(value * 650);
+    return new Intl.NumberFormat("fr-FR", {
+      style: "currency",
+      currency: "XOF",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(valueInCFA);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <DashboardHeader />

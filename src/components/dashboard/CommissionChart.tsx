@@ -61,7 +61,16 @@ export default function CommissionChart({ className }: CommissionChartProps) {
               <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
               <XAxis dataKey="month" />
               <YAxis />
-              <Tooltip formatter={(value) => [`${value}€`, ""]} />
+              <Tooltip
+                formatter={(value) => {
+                  // Conversion d'euros en FCFA (1 EUR = environ 655.957 FCFA)
+                  const valueInCFA = Math.round((value as number) * 655.957);
+                  return [
+                    `${new Intl.NumberFormat("fr-FR").format(valueInCFA)} FCFA`,
+                    "",
+                  ];
+                }}
+              />
               <Legend />
               <Bar dataKey="retail" name="Retail" stackId="a" fill="#4f46e5" />
               <Bar dataKey="qvp" name="QVP" stackId="a" fill="#0ea5e9" />

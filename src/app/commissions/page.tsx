@@ -177,12 +177,14 @@ export default function CommissionsPage() {
   ];
 
   const formatCurrency = (value: number) => {
+    // Conversion d'euros en FCFA (1 EUR = 650 FCFA)
+    const valueInCFA = Math.floor(value * 650);
     return new Intl.NumberFormat("fr-FR", {
       style: "currency",
-      currency: "EUR",
+      currency: "XOF",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
-    }).format(value);
+    }).format(valueInCFA);
   };
 
   return (
@@ -262,7 +264,10 @@ export default function CommissionsPage() {
                       ))}
                     </Pie>
                     <Tooltip
-                      formatter={(value) => formatCurrency(value as number)}
+                      formatter={(value) => [
+                        formatCurrency(value as number),
+                        "",
+                      ]}
                     />
                     <Legend />
                   </PieChart>
@@ -397,7 +402,9 @@ export default function CommissionsPage() {
                     <YAxis
                       yAxisId="left"
                       stroke="#6b7280"
-                      tickFormatter={(value) => `${value}€`}
+                      tickFormatter={(value) =>
+                        `${Math.floor(value * 650)} FCFA`
+                      }
                     />
                     <YAxis
                       yAxisId="right"
@@ -568,7 +575,9 @@ export default function CommissionsPage() {
                     <YAxis
                       yAxisId="left"
                       stroke="#6b7280"
-                      tickFormatter={(value) => `${value}€`}
+                      tickFormatter={(value) =>
+                        `${Math.floor(value * 650)} FCFA`
+                      }
                     />
                     <YAxis
                       yAxisId="right"
@@ -721,9 +730,16 @@ export default function CommissionsPage() {
                     <XAxis dataKey="mois" stroke="#6b7280" />
                     <YAxis
                       stroke="#6b7280"
-                      tickFormatter={(value) => `${value}€`}
+                      tickFormatter={(value) =>
+                        `${Math.floor(value * 650)} FCFA`
+                      }
                     />
-                    <Tooltip formatter={(value) => [`${value}€`, ""]} />
+                    <Tooltip
+                      formatter={(value) => [
+                        `${Math.floor((value as number) * 650)} FCFA`,
+                        "",
+                      ]}
+                    />
                     <Legend />
                     <Bar dataKey="qvp" name="QVP" fill="#0ea5e9" />
                     <Bar dataKey="gros" name="Gros" fill="#6366f1" />
@@ -914,7 +930,9 @@ export default function CommissionsPage() {
                       <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                       <XAxis
                         type="number"
-                        tickFormatter={(value) => `${value}€`}
+                        tickFormatter={(value) =>
+                          `${Math.floor(value * 650)} FCFA`
+                        }
                       />
                       <YAxis
                         type="category"
@@ -922,7 +940,12 @@ export default function CommissionsPage() {
                         width={100}
                         stroke="#6b7280"
                       />
-                      <Tooltip formatter={(value) => [`${value}€`, ""]} />
+                      <Tooltip
+                        formatter={(value) => [
+                          `${Math.floor((value as number) * 650)} FCFA`,
+                          "",
+                        ]}
+                      />
                       <Legend />
                       <Bar
                         dataKey="montant"
